@@ -1,0 +1,16 @@
+name: UHCTimer
+description: A timer for UHC events.
+main: ee.ellytr.uhctimer.Timer
+version: 0.1-SNAPSHOT
+authors: [Elly]
+prefix: UT
+commands:
+  uhctimer:
+    usage: /uhctimer <time> <message>
+    description: Start a timer for an event.
+  toggleuhctimer:
+    usage: /toggleuhctimer
+    description: Toggles the action bar timer for a player.
+  canceluhctimer:
+    usage: /canceluhctimer
+    description: Cancels the current timer.

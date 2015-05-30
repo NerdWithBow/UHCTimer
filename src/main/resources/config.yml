@@ -1,0 +1,4 @@
+start-countdown: 5.0
+description-color: green
+time-color: aqua
+time-show-millis: true
