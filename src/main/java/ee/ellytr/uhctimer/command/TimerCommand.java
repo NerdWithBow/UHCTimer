@@ -1,6 +1,7 @@
 package ee.ellytr.uhctimer.command;
 
 import ee.ellytr.uhctimer.Timer;
+import ee.ellytr.uhctimer.timer.TimerRunnable;
 import ee.ellytr.uhctimer.utils.MessageUtils;
 import ee.ellytr.uhctimer.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -26,17 +27,28 @@ public class TimerCommand implements CommandExecutor {
 					MessageUtils.sendErrorMessage(sender, "Too few arguments.");
 					return false;
 				} else {
-					int time = StringUtils.timeStringToSeconds(args[0]);
-					String message = "";
-					for (int i = 0; i < args.length; i++) {
-						if (i > 0) {
-							message += args[i] + " ";
+					try {
+						int time = StringUtils.timeStringToSeconds(args[0]);
+						boolean hidden = false;
+						String message = "";
+						for (int i = 0; i < args.length; i++) {
+							if (i > 0) {
+								if (args[i].equalsIgnoreCase("-h")) {
+									hidden = true;
+								} else {
+									message += args[i] + " ";
+								}
+							}
 						}
+						message = message.trim();
+						TimerRunnable timer = Timer.getTimer();
+						timer.setTime(time);
+						timer.setMessage(message);
+						timer.setHidden(hidden);
+						timer.setCancelled(false);
+					} catch (NumberFormatException e) {
+						MessageUtils.sendErrorMessage(sender, "Time period expected, string received instead.");
 					}
-					message = message.trim();
-					Timer.getTimer().setTime(time);
-					Timer.getTimer().setMessage(message);
-					Timer.getTimer().setCancelled(false);
 				}
 			} else {
 				MessageUtils.sendErrorMessage(sender, "You don't have permission.");
